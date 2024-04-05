@@ -61,3 +61,12 @@ apt-cache policy mysql-server
 
 # Устанавливаю пакет
 sudo apt install mysql-client mysql-server
+
+####
+## ЗАДАНИЕ 4
+#################
+
+# устанавливаю пакет
+sudo dpkg -i mysql-apt-config_0.8.22-1_all.deb
+# удаляю
+sudo dpkg -r mysql-apt-config

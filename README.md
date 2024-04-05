@@ -84,3 +84,18 @@ apt-cache policy mysql-server
 sudo apt install mysql-client mysql-server
 
 ```
+
+### Задание 4
+
+| Установить и удалить deb-пакет с помощью dpkg.
+
+### Решение задания 4
+```
+
+# Устанавливаю
+sudo dpkg -i mysql-apt-config_0.8.22-1_all.deb
+
+# Удаляю
+
+sudo dpkg -r mysql-apt-config
+```
