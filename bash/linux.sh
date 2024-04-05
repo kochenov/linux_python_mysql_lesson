@@ -41,3 +41,23 @@ mkdir Питомник
 
 # Перемещаем файл
 mv Друзья_человека.txt Питомник
+
+
+####
+## ЗАДАНИЕ 3
+#################
+
+# Добавляем репозиторий
+# Загружаю репозиторий
+wget https://dev.mysql.com/get/mysql-apt-config_0.8.22-1_all.deb
+# Запуск настройки
+sudo dpkg -i mysql-apt-config_0.8.22-1_all.deb
+
+# Обновляем список пакетов
+sudo apt update
+
+# проверяю кэш пакетов
+apt-cache policy mysql-server
+
+# Устанавливаю пакет
+sudo apt install mysql-client mysql-server
