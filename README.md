@@ -99,3 +99,22 @@ sudo dpkg -i mysql-apt-config_0.8.22-1_all.deb
 
 sudo dpkg -r mysql-apt-config
 ```
+
+### Задание 5
+
+| Выложить историю команд в терминале ubuntu
+
+### Решение задания 5
+
+```
+
+# Просмотр истории команд
+history
+
+# Сохранение истории команд
+history > history.txt
+
+# Очистка истории команд
+history -c
+
+```

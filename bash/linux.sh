@@ -70,3 +70,16 @@ sudo apt install mysql-client mysql-server
 sudo dpkg -i mysql-apt-config_0.8.22-1_all.deb
 # удаляю
 sudo dpkg -r mysql-apt-config
+
+####
+## ЗАДАНИЕ 5
+#################
+
+# Просмотр истории команд
+history
+
+# Сохранение истории команд
+history > history.txt
+
+# Очистка истории команд
+history -c
