@@ -146,7 +146,7 @@ mysql -u root -p
 CREATE DATABASE human_friends;
 
 ```
-Для решения заданий связанных с базой данных дальше, я буду использовать Python и Postgres (как аналог MySql), так как я использую Windows на своём ПК, принял решение делать разработку в докер контейнере и использовать `docker-compose.yml `
+Для решения заданий связанных с базой данных дальше, я буду использовать `postgres` (как аналог MySql), так как я использую Windows на своём ПК, принял решение делать разработку в докер контейнере и использовать `docker-compose.yml `
 
 ```
 # docker-compose.yml
@@ -381,3 +381,9 @@ LEFT JOIN pack_animal pa ON a.id = p.animal_id
 LEFT JOIN command_execution ce ON p.id = ce.pet_id;
 
 ```
+
+### Задание 13/14
+
+`main.py` и `classes.py`
+
+Весь код прокомментирован и понятен интуитивно.

@@ -1,343 +1,160 @@
-# --- Класс Animal ---
-
 class Animal:
     """
-    Абстрактный класс для представления животных.
-
-    Атрибуты:
-        name (str): Имя животного.
-        age (int): Возраст животного.
+    Базовый класс для всех домашних животных.
     """
-
-    def __init__(self, name, age):
+    def __init__(self, species, name, age):
         """
-        Инициализирует новый объект Animal.
+        Инициализация животного.
 
         Args:
-            name (str): Имя животного.
-            age (int): Возраст животного.
+            species (str): Вид животного (например, "Собака", "Кошка").
+            name (str): Кличка животного.
+            age (int): Возраст животного (в годах).
         """
+        self.species = species
         self.name = name
         self.age = age
+        self.commands = set()  # Множество для хранения выученных команд
 
-    def __str__(self):
+    def add_command(self, command):
         """
-        Возвращает строковое представление объекта Animal.
-
-        Returns:
-            str: Строковое представление объекта.
-        """
-        return f"Животное: {self.name}, возраст: {self.age}"
-
-
-# --- Класс Pet ---
-
-class Pet(Animal):
-    """
-    Класс для представления домашних животных.
-
-    Наследует от Animal.
-
-    Атрибуты:
-        breed (str): Порода домашнего животного.
-    """
-
-    def __init__(self, name, age, breed):
-        """
-        Инициализирует новый объект Pet.
+        Добавляет новую команду животному.
 
         Args:
-            name (str): Имя животного.
-            age (int): Возраст животного.
-            breed (str): Порода домашнего животного.
+            command (str): Новая команда, которую должно выучить животное.
         """
-        super().__init__(name, age)
-        self.breed = breed
+        self.commands.add(command)
 
-    def __str__(self):
+    def get_commands(self):
         """
-        Возвращает строковое представление объекта Pet.
+        Возвращает список выученных животным команд (отсортированный).
 
         Returns:
-            str: Строковое представление объекта.
+            list: Список выученных команд.
         """
-        return f"Домашнее животное: {self.name}, возраст: {self.age}, порода: {self.breed}"
+        return sorted(self.commands)
 
-    def make_sound(self):
+    def __repr__(self):
         """
-        Абстрактный метод, который должен быть переопределен в классах-наследниках.
-
-        Возвращает звук, издаваемый животным.
+        Определяет строковое представление объекта Animal.
 
         Returns:
-            str: Звук, издаваемый животным.
+            str: Строка вида "Вид Кличка (Возраст)".
         """
-        raise NotImplementedError
+        return f"{self.species} {self.name} ({self.age})"
+    
 
 
-# --- Класс Dog ---
 
-class Dog(Pet):
+class Dog(Animal):
     """
-    Класс для представления собак.
+    Класс, описывающий собаку.
 
-    Наследует от Pet.
+    Наследует от класса Animal.
     """
-
-    def __init__(self, name, age, breed):
+    def __init__(self, name, age):
         """
-        Инициализирует новый объект Dog.
+        Инициализация собаки.
 
         Args:
-            name (str): Имя собаки.
-            age (int): Возраст собаки.
-            breed (str): Порода собаки.
+            name (str): Кличка собаки.
+            age (int): Возраст собаки (в годах).
         """
-        super().__init__(name, age, breed)
+        super().__init__("Собака", name, age)  # Инициализация базового класса Animal
 
-    def __str__(self):
-        """
-        Возвращает строковое представление объекта Dog.
+        # Добавление стандартных команд для собаки
+        self.commands.add("Сидеть")
+        self.commands.add("Лежать")
 
-        Returns:
-            str: Строковое представление объекта.
-        """
-        return f"Собака: {self.name}, возраст: {self.age}, порода: {self.breed}"
-
-    def make_sound(self):
-        """
-        Возвращает звук, издаваемый собакой.
-
-        Returns:
-            str: Звук "Гав!".
-        """
-        return "Гав!"
-
-
-# --- Класс Cat ---
-
-class Cat(Pet):
+class Cat(Animal):
     """
-    Класс для представления кошек.
+    Класс, описывающий кошку.
 
-    Наследует от Pet.
+    Наследует от класса Animal.
     """
-
-    def __init__(self, name, age, breed):
+    def __init__(self, name, age):
         """
-        Инициализирует новый объект Cat.
+        Инициализация кошки.
 
         Args:
-            name (str): Имя кошки.
-            age (int): Возраст кошки.
-            breed (str): Порода кошки.
+            name (str): Кличка кошки.
+            age (int): Возраст кошки (в годах).
         """
-        super().__init__(name, age, breed)
+        super().__init__("Кошка", name, age)  # Инициализация базового класса Animal
 
-    def __str__(self):
-        """
-        Возвращает строковое представление объекта Cat.
-
-        Returns:
-            str: Строковое представление объекта.
-        """
-        return f"Кошка: {self.name}, возраст: {self.age}, порода: {self.breed}"
-
-    def make_sound(self):
-        """
-        Возвращает звук, издаваемый кошкой.
-
-        Returns:
-            str: Звук "Мяу!".
-        """
-        return "Мяу!"
+        # Добавление стандартной команды для кошки
+        self.commands.add("Дай лапу")
 
 
-# --- Класс Hamster ---
-
-class Hamster(Pet):
+class Registry:
     """
-    Класс для представления хомяков.
-
-    Наследует от Pet.
+    Класс для управления реестром домашних животных.
     """
-
-    def __init__(self, name, age, breed):
+    def __init__(self):
         """
-        Инициализирует новый объект Hamster.
+        Инициализация реестра.
+        """
+        self.animals = []  # Список животных в реестре
+
+    def add_animal(self, animal):
+        """
+        Добавляет животное в реестр.
 
         Args:
-            name (str): Имя хомяка.
-            age (int): Возраст хомяка.
-            breed (str): Порода хомяка.
+            animal (Animal): Объект класса Animal, представляющий животное.
         """
-        super().__init__(name, age, breed)
+        self.animals.append(animal)
 
-    def __str__(self):
+    def get_animals(self):
         """
-        Возвращает строковое представление объекта Hamster.
+        Возвращает список всех животных в реестре, отсортированный по виду.
 
         Returns:
-            str: Строковое представление объекта.
+            list: Список объектов класса Animal.
         """
-        return f"Хомяк: {self.name}, возраст: {self.age}, порода: {self.breed}"
+        return sorted(self.animals, key=lambda a: a.species)
 
-    def make_sound(self):
+    def get_animal_by_name(self, name):
         """
-        Возвращает звук, издаваемый хомяком.
-
-        Returns:
-            str: Звук "Писк!".
-        """
-        return "Писк!"
-
-
-# --- Класс PackAnimal ---
-
-class PackAnimal(Animal):
-    """
-    Абстрактный класс для представления вьючных животных.
-
-    Наследует от Animal.
-
-    Атрибуты:
-        carrying_capacity (int): Грузоподъемность животного.
-    """
-
-    def __init__(self, name, age, carrying_capacity):
-        """
-        Инициализирует новый объект PackAnimal.
+        Ищет животное в реестре по имени.
 
         Args:
-            name (str): Имя животного.
-            age (int): Возраст животного.
-            carrying_capacity (int): Грузоподъемность животного.
-        """
-        super().__init__(name, age)
-        self.carrying_capacity = carrying_capacity
-
-    def __str__(self):
-        """
-        Возвращает строковое представление объекта PackAnimal.
+            name (str): Кличка животного.
 
         Returns:
-            str: Строковое представление объекта.
+            Animal: Объект класса Animal, если животное найдено, иначе None.
         """
-        return f"Вьючное животное: {self.name}, возраст: {self.age}, грузоподъемность: {self.carrying_capacity}"
+        for animal in self.animals:
+            if animal.name == name:
+                return animal
+        return None
 
-
-# --- Класс Horse ---
-
-class Horse(PackAnimal):
-    """
-    Класс для представления лошадей.
-
-    Наследует от PackAnimal.
-    """
-
-    def __init__(self, name, age, carrying_capacity):
+    def teach_command(self, animal_name, command):
         """
-        Инициализирует новый объект Horse.
+        Обучает животное новой команде.
 
         Args:
-            name (str): Имя лошади.
-            age (int): Возраст лошади.
-            carrying_capacity (int): Грузоподъемность лошади.
+            animal_name (str): Кличка животного.
+            command (str): Новая команда.
         """
-        super().__init__(name, age, carrying_capacity)
-
-    def __str__(self):
-        """
-        Возвращает строковое представление объекта Horse.
-
-        Returns:
-            str: Строковое представление объекта.
-        """
-        return f"Лошадь: {self.name}, возраст: {self.age}, грузоподъемность: {self.carrying_capacity}"
-
-    def gallop(self):
-        """
-        Возвращает строку, описывающую скачку лошади.
-
-        Returns:
-            str: "Скачет!".
-        """
-        return "Скачет!"
+        animal = self.get_animal_by_name(animal_name)
+        if animal:
+            animal.add_command(command)  # Добавляем команду найденному животному
 
 
-# --- Класс Camel ---
 
-class Camel(PackAnimal):
-    """
-    Класс для представления верблюдов.
+class Counter:
+    def __init__(self):
+        self.count = 0
 
-    Наследует от PackAnimal.
+    def add(self):
+        self.count += 1
 
-    Атрибуты:
-        humps (int): Количество горбов у верблюда.
-    """
+    def __enter__(self):
+        return self
 
-    def __init__(self, name, age, carrying_capacity, humps):
-        """
-        Инициализирует новый объект Camel.
-
-        Args:
-            name (str): Имя верблюда.
-            age (int): Возраст верблюда.
-            carrying_capacity (int): Грузоподъемность верблюда.
-            humps (int): Количество горбов у верблюда.
-        """
-        super().__init__(name, age, carrying_capacity)
-        self.humps = humps
-
-    def __str__(self):
-        """
-        Возвращает строковое представление объекта Camel.
-
-        Returns:
-            str: Строковое представление объекта.
-        """
-        return f"Верблюд: {self.name}, возраст: {self.age}, грузоподъемность: {self.carrying_capacity}, количество горбов: {self.humps}"
-
-# --- Класс Donkey ---
-
-class Donkey(PackAnimal):
-    """
-    Класс для представления ослов.
-
-    Наследует от PackAnimal.
-
-    Атрибуты:
-        stubbornness (int): Упрямство осла.
-    """
-
-    def __init__(self, name, age, carrying_capacity, stubbornness):
-        """
-        Инициализирует новый объект Donkey.
-
-        Args:
-            name (str): Имя осла.
-            age (int): Возраст осла.
-            carrying_capacity (int): Грузоподъемность осла.
-            stubbornness (int): Упрямство осла.
-        """
-        super().__init__(name, age, carrying_capacity)
-        self.stubbornness = stubbornness
-
-    def __str__(self):
-        """
-        Возвращает строковое представление объекта Donkey.
-
-        Returns:
-            str: Строковое представление объекта.
-        """
-        return f"Осёл: {self.name}, возраст: {self.age}, грузоподъемность: {self.carrying_capacity}, упрямство: {self.stubbornness}"
-
-    def be_stubborn(self):
-        """
-        Возвращает строку, описывающую упрямство осла.
-
-        Returns:
-            str: "Упрямится!".
-        """
-        return "Упрямится!"
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if exc_type is not None:
+            print("Ошибка при работе со счетчиком")
+        else:
+            print(f"Добавлено новое животное (счетчик: {self.count})")
