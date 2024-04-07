@@ -315,3 +315,69 @@ DROP TABLE pack_animal;
 ALTER TABLE pack_animal_combined RENAME TO pack_animal;
 
 ```
+
+### Задание 11
+Создать новую таблицу “молодые животные” в которую попадут все
+животные старше 1 года, но младше 3 лет и в отдельном столбце с точностью
+до месяца подсчитать возраст животных в новой таблице
+
+#### Решение задания 11
+
+```
+
+-- Создание новой таблицы "Молодые животные"
+CREATE TABLE young_animals (
+  -- Идентификатор животного (autoincrement)
+  id SERIAL PRIMARY KEY,
+  -- Внешний ключ к таблице "Животное" (id животного, не null)
+  animal_id INT NOT NULL,
+  -- Вид животного (строка длиной 255 символов, не null)
+  species VARCHAR(255) NOT NULL,
+  -- Возраст в месяцах (целое число, не null)
+  age_in_months INT NOT NULL,
+  -- Ограничение внешнего ключа (ссылка на таблицу "Животное" по полю id)
+  FOREIGN KEY (animal_id) REFERENCES animal (id)
+);
+
+-- Заполнение таблицы "Молодые животные"
+INSERT INTO young_animals (animal_id, species, age_in_months)
+SELECT
+  -- id животного из таблицы "Выполнение команды"
+  animal_id,
+  -- Вид животного из таблицы "Выполнение команды"
+  species,
+  -- Вычисление возраста в месяцах
+  (EXTRACT(YEAR FROM CURRENT_DATE) - EXTRACT(YEAR FROM date_of_birth)) * 12 + EXTRACT(MONTH FROM CURRENT_DATE) - EXTRACT(MONTH FROM date_of_birth)
+FROM command_execution
+JOIN pet ON pet.id = command_execution.pet_id
+WHERE 
+  -- Животные старше 1 года 
+  (EXTRACT(YEAR FROM CURRENT_DATE) - EXTRACT(YEAR FROM date_of_birth)) * 12 + EXTRACT(MONTH FROM CURRENT_DATE) - EXTRACT(MONTH FROM date_of_birth) > 12
+  -- И младше 3 лет
+AND (EXTRACT(YEAR FROM CURRENT_DATE) - EXTRACT(YEAR FROM date_of_birth)) * 12 + EXTRACT(MONTH FROM CURRENT_DATE) - EXTRACT(MONTH FROM date_of_birth) < 36;
+
+```
+
+### Задание 12
+
+ Объединить все таблицы в одну, при этом сохраняя поля, указывающие на
+прошлую принадлежность к старым таблицам.
+
+
+### Решение задания 12
+
+```
+
+SELECT
+  a.id,
+  a.type,
+  p.species,
+  pa.carrying_capacity,
+  ce.command_id,
+  ce.date_of_birth
+FROM animal a
+LEFT JOIN pet p ON a.id = p.animal_id
+LEFT JOIN pack_animal pa ON a.id = p.animal_id
+LEFT JOIN command_execution ce ON p.id = ce.pet_id;
+
+```
