@@ -1,0 +1,23 @@
+# Определяет версию формата файла docker-compose.yml
+version: '3'  
+
+services:
+  # Название сервиса - база данных PostgreSQL
+  postgres:  
+    # Образ для сервиса, используем последнюю версию postgres
+    image: "postgres:latest"  
+    # Окружающие переменные для сервиса
+    environment:  
+      # Пароль для пользователя postgres (не рекомендуется использовать в production)
+      - POSTGRES_PASSWORD=password  
+      # Название создаваемой базы данных
+      - POSTGRES_DB=human_friends  
+
+    ports:
+      # Маппирование портов - внешний:внутренний. 5432 - стандартный порт postgres
+      - "5432:5432"  
+
+    volumes:
+      # Тома - монтирование локальной директории data в контейнер, 
+      # где будут храниться данные базы данных
+      - ./data:/var/lib/postgresql/data  
