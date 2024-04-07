@@ -74,3 +74,33 @@ INSERT INTO command_execution (pet_id, command_id, date_of_birth) VALUES
   (3, 4, '2023-04-04'),
   (1, 3, '2023-05-05'), -- Собака умеет давать лапу
   (2, 4, '2023-06-06'); -- Кошка умеет приносить
+
+
+
+
+  --------------------- 10 задание
+
+  -- Создание новой таблицы "Вьючное животное объединенное"
+CREATE TABLE pack_animal_combined (
+  id SERIAL PRIMARY KEY,
+  species VARCHAR(255) NOT NULL,
+  carrying_capacity INT NOT NULL
+);
+
+-- Перенос данных из таблицы "Лошадь"
+INSERT INTO pack_animal_combined (species, carrying_capacity)
+SELECT species, carrying_capacity
+FROM pack_animal
+WHERE species = 'Лошадь';
+
+-- Перенос данных из таблицы "Осёл"
+INSERT INTO pack_animal_combined (species, carrying_capacity)
+SELECT species, carrying_capacity
+FROM pack_animal
+WHERE species = 'Осёл';
+
+-- Удаление таблиц "Лошадь" и "Осёл"
+DROP TABLE pack_animal;
+
+-- Переименование "Вьючное животное объединенное" в "Вьючное животное"
+ALTER TABLE pack_animal_combined RENAME TO pack_animal;

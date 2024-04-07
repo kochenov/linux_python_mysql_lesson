@@ -281,3 +281,37 @@ INSERT INTO command_execution (pet_id, command_id, date_of_birth) VALUES
 
 ```
 
+### Задание 10 
+Удалив из таблицы верблюдов, т.к. верблюдов решили перевезти в другой
+питомник на зимовку. Объединить таблицы лошади, и ослы в одну таблицу.
+
+#### Решение задания 10
+
+```
+
+-- Создание новой таблицы "Вьючное животное объединенное"
+CREATE TABLE pack_animal_combined (
+  id SERIAL PRIMARY KEY,
+  species VARCHAR(255) NOT NULL,
+  carrying_capacity INT NOT NULL
+);
+
+-- Перенос данных из таблицы "Лошадь"
+INSERT INTO pack_animal_combined (species, carrying_capacity)
+SELECT species, carrying_capacity
+FROM pack_animal
+WHERE species = 'Лошадь';
+
+-- Перенос данных из таблицы "Осёл"
+INSERT INTO pack_animal_combined (species, carrying_capacity)
+SELECT species, carrying_capacity
+FROM pack_animal
+WHERE species = 'Осёл';
+
+-- Удаление таблиц "Лошадь" и "Осёл"
+DROP TABLE pack_animal;
+
+-- Переименование "Вьючное животное объединенное" в "Вьючное животное"
+ALTER TABLE pack_animal_combined RENAME TO pack_animal;
+
+```
