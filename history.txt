@@ -1,0 +1,36 @@
+71  cat > Домашние_животные <<EOF
+Собака
+Кошка
+Хомяк
+EOF
+
+   72  cat > Вьючные_животные <<EOF
+Лошадь
+Верблюд
+Осёл
+EOF
+
+   73  ls
+   74  cat Домашние_животные Вьючные_животные > Друзья_человека
+   75  cat Друзья_человека
+   76  mv Друзья_человека Друзья_человека.txt
+   77  mkdir Питомник
+   78  mv Друзья_человека.txt Питомник
+   79  sudo add-apt-repository ppa:mysql/mysql-8.0
+   80  wget -c https://repo.mysql.com/apt/debian/repo-key-mysql-8.0.tar.gz
+   81  sudo gpg --dearmor repo-key-mysql-8.0.tar.gz | sudo gpg --import /etc/apt/trusted.gpg.d/mysql.gpg
+   82  wget https://dev.mysql.com/get/mysql-apt-config_0.8.22-1_all.deb
+   83  sudo dpkg -i mysql-apt-config_0.8.22-1_all.deb
+   84  sudo apt update
+   85  apt-cache policy mysql-server
+   86  sudo apt install mysql-client mysql-server
+   87  sudo dpkg -r mysql-apt-config_0.8.22-1_all.deb
+   88  ls
+   89  sudo dpkg -r mysql-apt-config_0.8.22-1_all.deb
+   90  sudo dpkg -r mysql-apt-config_0.8.22-1_all
+   91  sudo dpkg -r mysql-apt-config_0.8.22-1_allювуи
+   92  sudo dpkg -r mysql-apt-config_0.8.22-1_all.deb
+   93  dpkg -l | grep mysql-apt-config
+   94  sudo dpkg -r mysql-apt-config
+   95  history
+   96  history > history.txt
